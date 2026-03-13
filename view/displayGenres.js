@@ -3,9 +3,9 @@ export function displayGenre(genre) {
 
     const figure = document.createElement("figure");
     const img = document.createElement("img");
-    img.href = genre.picture_big;
+    img.src = genre.picture_big;
     const figcaption = document.createElement("figcaption");
-    figcaption.text = genre.name;
+    figcaption.textContent = genre.name;
 
     figure.appendChild(img);
     figure.appendChild(figcaption);
