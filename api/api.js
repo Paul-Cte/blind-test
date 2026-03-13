@@ -1,9 +1,12 @@
-async function getCategorie(genreId) {
+export async function getCategorie(genreId) {
     try {
-        const response = await fetch(`https://api.deezer.com/genre/${genreId}`);
+        const targetUrl = `https://api.deezer.com/genre/${genreId}`;
+        const proxyUrl = `https://corsproxy.io/?${encodeURIComponent(targetUrl)}`;
+        const response = await fetch(proxyUrl);
         const data = await response.json();
-        console.log(data);
+        return data; 
+        
     } catch (error) {
-        console.error(error);
+        console.error("Erreur avec l'API ou le proxy :", error);
     }
 }
