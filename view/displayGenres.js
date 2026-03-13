@@ -12,3 +12,10 @@ export function displayGenre(genre) {
 
     container.appendChild(figure);
 }
+
+export function debutPartie(genre){
+    const container = document.querySelector("#interface-selection");
+    const jeu = document.querySelector("#interface-partie");
+    container.style.display = "none";
+    jeu.style.display = "block";
+}

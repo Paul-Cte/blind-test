@@ -1,4 +1,10 @@
 import { loadGenre } from "./controller/genreController.js";
-
-loadGenre(116); // rap
-loadGenre(464); // metal
+let idGenres = {
+    "Rap" : 116,
+    "Metal" : 464,
+    "Jazz" : 129,
+    "Films/Jeux vidéo" : 173
+}
+Object.values(idGenres).forEach((element) => {
+    loadGenre(element);
+});
