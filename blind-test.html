@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="stylesheet" href="./blind-test.css" />
+    <link rel="stylesheet" href="./public/blind-test.css" />
     <title>Blind Test</title>
   </head>
   <body>
@@ -21,7 +21,24 @@
         <section id="body-selection"></section>
       </div>
 
-      <div id="interface-partie" class="hide"></div>
+      <div id="interface-partie" class="hide">
+        <button id="btn-quitter-bt">Quitter</button>
+        <div id="interface-ig-partie">
+          <h1 id="playlist-title"></h1>
+          <div id="player">
+            <div id="cover-container">
+              <img src="" alt="cover" id="cover" />
+              <span id="timer"></span>
+            </div>
+            <span id="response"></span>
+          </div>
+          <div id="response-part">
+            <input type="text" placeholder="Votre réponse" />
+            <button id="btn-valider" type="button">Valider</button>
+            <button id="btn-suivant">Suivant</button>
+          </div>
+        </div>
+      </div>
     </main>
     <footer></footer>
     <script type="module" src="main.js"></script>
