@@ -1,7 +1,8 @@
-export function displayGenre(genre, index) {
+export function displayGenre(genre, index, playlistId) {
   const container = document.querySelector("#body-selection");
 
   const figure = document.createElement("figure");
+  figure.dataset.playlist = playlistId;
   const img = document.createElement("img");
   img.src = genre.picture_big;
   const figcaption = document.createElement("figcaption");
@@ -15,11 +16,4 @@ export function displayGenre(genre, index) {
   }
 
   container.appendChild(figure);
-}
-
-export function debutPartie(genre) {
-  const container = document.querySelector("#interface-selection");
-  const jeu = document.querySelector("#interface-partie");
-  container.style.display = "none";
-  jeu.style.display = "block";
 }
