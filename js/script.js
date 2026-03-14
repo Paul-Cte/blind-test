@@ -35,3 +35,17 @@ view.interfaceSelection.addEventListener("click", (event) => {
     });
   }
 });
+
+view.btnQuitter.addEventListener("click", () => {
+  const audioEnCours = view.player.querySelector("audio");
+  if (audioEnCours) {
+    audioEnCours.pause();
+    audioEnCours.remove();
+  }
+  view.timer.textContent = "";
+  view.response.textContent = "";
+  view.inputResponse.value = "";
+  view.cover.src = "";
+  view.playlistTitle.textContent = "";
+  view.interfacePartie.classList.add("hide");
+});

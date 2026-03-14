@@ -13,4 +13,5 @@ export const view = {
   btnQuitter: document.querySelector("#btn-quitter-bt"),
   inputResponse: document.querySelector("#response-part input"),
   btnValider: document.querySelector("#btn-valider"),
+  btnSuivant: document.querySelector("#btn-suivant"),
 };
