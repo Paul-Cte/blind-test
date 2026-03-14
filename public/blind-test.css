@@ -4,8 +4,14 @@
   box-sizing: border-box;
 }
 
+:root {
+  --background-color: #191919;
+  --clearer-black: #272727;
+  --deezer-purple: #8b22de;
+}
+
 body {
-  background-color: #191919;
+  background-color: var(--background-color);
   overflow-x: hidden;
 }
 
@@ -34,7 +40,7 @@ body {
   padding: 10px;
   padding-left: 15px;
   border-radius: 20px;
-  background-color: #272727;
+  background-color: var(--clearer-black);
   color: white;
   border: none;
 }
@@ -131,7 +137,7 @@ body {
 #interface-partie {
   height: 100vh;
   width: 100%;
-  background-color: #191919;
+  background-color: var(--background-color);
   position: absolute;
   top: 0;
   left: 0;
@@ -164,6 +170,7 @@ body {
 
 #timer {
   font-size: 15rem;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
   color: white;
   position: absolute;
   top: 50%;
@@ -194,7 +201,7 @@ body {
   padding-left: 15px;
   border-top-left-radius: 5px;
   border-bottom-left-radius: 5px;
-  background-color: #272727;
+  background-color: var(--clearer-black);
   color: white;
   border: none;
 }
@@ -209,9 +216,7 @@ body {
 
 #response-part #btn-valider {
   font-size: 1.3rem;
-  padding: 10px;
-  padding-left: 15px;
-  padding-right: 15px;
+  padding: 10px 2rem;
   border-top-right-radius: 5px;
   border-bottom-right-radius: 5px;
   background-color: white;
@@ -223,7 +228,7 @@ body {
 
 #response-part #btn-valider:hover {
   color: white;
-  background-color: green;
+  background-color: var(--deezer-purple);
 }
 
 #response {
@@ -240,17 +245,14 @@ body {
 
 /* CSS */
 #btn-suivant {
-  padding: 0.6rem 2rem;
+  padding: 10px 2rem;
   border: none;
   outline: none;
-  color: rgb(255, 255, 255);
-  background: #111;
+  background: var(--deezer-purple);
+  color: white;
   cursor: pointer;
   z-index: 0;
   border-radius: 5px;
-  user-select: none;
-  -webkit-user-select: none;
-  touch-action: manipulation;
   position: absolute;
   left: 110%;
   bottom: 0px;
@@ -277,6 +279,7 @@ body {
   touch-action: manipulation;
   position: relative;
   z-index: 0;
+  border-radius: 10px;
 }
 
 #cover-container::before {
@@ -284,9 +287,9 @@ body {
   background: linear-gradient(
     45deg,
     #ff00c8,
-    #7a00ff,
+    var(--deezer-purple),
     #ffffff,
-    #7a00ff,
+    var(--deezer-purple),
     #ff00c8
   );
   position: absolute;
@@ -322,11 +325,19 @@ body {
 
 #btn-quitter-bt {
   padding: 0.6rem 2rem;
+  font-size: 1.3rem;
   border: none;
   outline: none;
   color: rgb(255, 255, 255);
-  background: #7a00ff;
+  background: var(--deezer-purple);
   cursor: pointer;
   z-index: 0;
   border-radius: 5px;
+}
+
+#btn-suivant.disabled,
+#btn-valider.disabled {
+  background: var(--clearer-black);
+  cursor: not-allowed !important;
+  filter: brightness(30%);
 }
