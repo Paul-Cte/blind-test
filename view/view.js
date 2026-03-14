@@ -8,6 +8,8 @@ export const view = {
   timer: document.querySelector("#timer"),
   response: document.querySelector("#response"),
   player: document.querySelector("#player"),
+  score: document.querySelector("#score"),
+  nbTracks: document.querySelector("#nb-tracks"),
 
   // Boutons et inputs
   btnQuitter: document.querySelector("#btn-quitter-bt"),

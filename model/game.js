@@ -4,7 +4,7 @@ export class Game {
     this.score = 0;
     this.currentTrackIndex = 0;
     // Mélanger les musiques
-    this.tracks.sort(() => Math.random() - 0.5);
+    this.tracks = this.tracks.sort(() => Math.random() - 0.5).slice(0, 10);
   }
 
   getCurrentTrack() {
