@@ -10,7 +10,7 @@ export function startGameUI(partie, title) {
 export function renderQuestion(track) {
   view.response.textContent = "";
   view.cover.src = track.album.cover_big;
-  view.cover.style.filter = "blur(15px)";
+  view.cover.style.filter = "blur(50px)";
 
   view.timer.textContent = "15";
 
