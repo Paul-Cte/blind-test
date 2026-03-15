@@ -1,6 +1,7 @@
 // a
 import { startGame } from "../controller/gameController.js";
 import { view } from "../view/view.js";
+import { loadPlaylistPerso } from "../controller/genreController.js";
 
 let currentTranslate = 0;
 
@@ -48,4 +49,9 @@ view.btnQuitter.addEventListener("click", () => {
   view.cover.src = "";
   view.playlistTitle.textContent = "";
   view.interfacePartie.classList.add("hide");
+});
+
+view.btnChercherPlaylist.addEventListener("click", () => {
+  const link = view.playlistPerso.value ?? "";
+  loadPlaylistPerso(link);
 });

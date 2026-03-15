@@ -1,5 +1,6 @@
 // blind-test/main.js
 import { loadGenre } from "./controller/genreController.js";
+import { view } from "./view/view.js";
 
 let idGenres = {
   "Rap/Hip Hop": { genreId: 116, playlistId: 1071669561 },
@@ -9,7 +10,8 @@ let idGenres = {
   Metal: { genreId: 464, playlistId: 1050179021 },
 };
 
-async function initGenres() {
+export async function initGenres() {
+  view.container.innerHTML = ""; // Clear existing genres
   const genresArray = Object.values(idGenres);
 
   for (let index = 0; index < genresArray.length; index++) {

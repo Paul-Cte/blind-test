@@ -1,6 +1,6 @@
-export function displayGenre(genre, index, playlistId) {
-  const container = document.querySelector("#body-selection");
+import { view } from "./view.js";
 
+export function displayGenre(genre, index, playlistId) {
   const figure = document.createElement("figure");
   figure.dataset.playlist = playlistId;
   const img = document.createElement("img");
@@ -15,5 +15,19 @@ export function displayGenre(genre, index, playlistId) {
     figure.classList.add("active");
   }
 
-  container.appendChild(figure);
+  view.container.appendChild(figure);
+}
+
+export function displayPlaylistPerso(genre, playlistId) {
+  view.container.innerHTML = ""; // Clear existing genres
+  const figure = document.createElement("figure");
+  figure.dataset.playlist = playlistId;
+  const img = document.createElement("img");
+  img.src = genre.picture_big;
+  const figcaption = document.createElement("figcaption");
+  figcaption.textContent = genre.title;
+  figure.classList.add("active");
+  figure.appendChild(img);
+  figure.appendChild(figcaption);
+  view.container.appendChild(figure);
 }
