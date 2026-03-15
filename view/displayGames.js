@@ -40,15 +40,56 @@ export function renderQuestion(partie) {
       return;
     }
     view.timer.textContent = 15 - Math.floor(audio.currentTime);
+
     if (audio.currentTime >= 15) {
+      hasAnswered = true;
       audio.pause();
       view.timer.textContent = "";
       answer = view.inputResponse.value ?? "";
+      showAnswer(partie, answer);
     } else {
       view.btnValider.disabled = false;
       view.btnValider.classList.remove("disabled");
     }
   });
+
+  audio.addEventListener("ended", () => {
+    if (hasAnswered) return;
+
+    hasAnswered = true;
+    view.timer.textContent = "";
+    answer = view.inputResponse.value ?? "";
+    showAnswer(partie, answer);
+  });
+
+  // --- GESTION DES SUGGESTIONS ---
+  view.inputResponse.oninput = (e) => {
+    const textTaped = e.target.value;
+    const suggestions = partie.getSuggestions(textTaped);
+
+    view.suggestionsList.innerHTML = ""; // On vide l'ancienne liste
+
+    // Si on a tapé au moins 2 lettres et qu'il y a des résultats
+    if (textTaped.length > 1 && suggestions.length > 0) {
+      view.suggestionsList.classList.remove("hide");
+
+      suggestions.forEach((titre) => {
+        const li = document.createElement("li");
+        li.textContent = titre;
+
+        // Si le joueur clique sur une suggestion
+        li.onclick = () => {
+          view.inputResponse.value = titre; // Remplir l'input
+          view.suggestionsList.classList.add("hide"); // Cacher la liste
+          view.suggestionsList.innerHTML = "";
+        };
+
+        view.suggestionsList.appendChild(li);
+      });
+    } else {
+      view.suggestionsList.classList.add("hide");
+    }
+  };
 
   // clique sur le bouton valider
   view.btnValider.onclick = () => {
@@ -64,6 +105,13 @@ export function renderQuestion(partie) {
     // Paul qui dit ça pas ia : ici j'ai mis onclick car ça permet de ne pas surcharger le nombre dévenement et d'éviter les bugs
     audio.pause();
     audio.remove();
+    endRound(partie);
+  };
+
+  view.btnSkip.onclick = () => {
+    audio.pause();
+    audio.remove();
+    view.inputResponse.value = "";
     endRound(partie);
   };
 }
