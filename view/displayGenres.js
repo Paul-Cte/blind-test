@@ -1,10 +1,15 @@
 import { view } from "./view.js";
+import { initGenres } from "../main.js";
 
 export function displayGenre(genre, index, playlistId) {
+  view.btnRetour.classList.add("hide");
+
   const figure = document.createElement("figure");
   figure.dataset.playlist = playlistId;
   const img = document.createElement("img");
   img.src = genre.picture_big;
+  img.draggable = false;
+
   const figcaption = document.createElement("figcaption");
   figcaption.textContent = genre.name;
 
@@ -23,11 +28,17 @@ export function displayPlaylistPerso(genre, playlistId) {
   const figure = document.createElement("figure");
   figure.dataset.playlist = playlistId;
   const img = document.createElement("img");
+  img.draggable = false;
   img.src = genre.picture_big;
   const figcaption = document.createElement("figcaption");
   figcaption.textContent = genre.title;
   figure.classList.add("active");
   figure.appendChild(img);
   figure.appendChild(figcaption);
+  view.btnRetour.classList.remove("hide");
+  view.btnRetour.addEventListener("click", () => {
+    view.container.innerHTML = "";
+    initGenres();
+  });
   view.container.appendChild(figure);
 }
