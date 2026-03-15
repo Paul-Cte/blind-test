@@ -2,6 +2,7 @@
 import { startGame } from "../controller/gameController.js";
 import { view } from "../view/view.js";
 import { loadPlaylistPerso } from "../controller/genreController.js";
+import { initGenres } from "../main.js";
 
 let currentTranslate = 0;
 
@@ -51,7 +52,25 @@ view.btnQuitter.addEventListener("click", () => {
   view.interfacePartie.classList.add("hide");
 });
 
-view.btnChercherPlaylist.addEventListener("click", () => {
-  const link = view.playlistPerso.value ?? "";
-  loadPlaylistPerso(link);
+view.btnChercherPlaylist.addEventListener("click", async () => {
+  const link = view.playlistPerso.value;
+
+  if (link) {
+    const originalIcon = view.btnChercherPlaylist.innerHTML;
+
+    view.btnChercherPlaylist.innerHTML = `
+      <svg class="spinner" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+        <path d="M21 12a9 9 0 1 1-6.219-8.56"></path>
+      </svg>
+    `;
+    view.btnChercherPlaylist.disabled = true;
+    view.btnChercherPlaylist.style.cursor = "wait";
+
+    await loadPlaylistPerso(link);
+
+    view.btnChercherPlaylist.innerHTML = originalIcon;
+    view.btnChercherPlaylist.disabled = false;
+    view.btnChercherPlaylist.style.cursor = "pointer";
+    view.playlistPerso.value = "";
+  }
 });

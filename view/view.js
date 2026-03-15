@@ -21,4 +21,5 @@ export const view = {
   suggestionsList: document.querySelector("#suggestions"),
   playlistPerso: document.querySelector("#input-playlist"),
   btnChercherPlaylist: document.querySelector("#btn-charger"),
+  btnRetour: document.querySelector("#btn-retour-genres"),
 };
