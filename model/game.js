@@ -1,8 +1,9 @@
 export class Game {
-  constructor(tracks) {
+  constructor(tracks, options) {
     this.Alltracks = tracks;
     this.score = 0;
     this.currentTrackIndex = 0;
+    this.guessTime = options.guessTime;
     // Mélanger les musiques
     this.tracks = this.Alltracks.sort(() => Math.random() - 0.5).slice(0, 10);
   }

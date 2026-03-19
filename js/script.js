@@ -1,5 +1,6 @@
 // a
-import { startGame } from "../controller/gameController.js";
+import { startGame } from "../controller/gameController.js"
+import { startOptions, validateOptions } from "../controller/optionsController.js";
 import { view } from "../view/view.js";
 import { loadPlaylistPerso } from "../controller/genreController.js";
 import { initGenres } from "../main.js";
@@ -13,7 +14,7 @@ view.interfaceSelection.addEventListener("click", (event) => {
     figures.forEach((figure) => {
       if (figure.contains(event.target)) {
         if (figure.classList.contains("active")) {
-          startGame(figure.dataset.playlist);
+          startOptions(figure.dataset.genre, figure.dataset.playlist);
         } else {
           figures.forEach((figure) => {
             figure.classList.remove("active");
@@ -74,3 +75,12 @@ view.btnChercherPlaylist.addEventListener("click", async () => {
     view.playlistPerso.value = "";
   }
 });
+
+view.btnOptionsRetour.addEventListener("click", () => {
+  view.optionsPartie.classList.add("hide");
+})
+
+view.btnOptionsValider.addEventListener("click", () => {
+    view.optionsPartie.classList.add("hide");
+    startGame(validateOptions());
+})

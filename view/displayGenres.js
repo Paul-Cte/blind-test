@@ -6,6 +6,7 @@ export function displayGenre(genre, index, playlistId) {
 
   const figure = document.createElement("figure");
   figure.dataset.playlist = playlistId;
+  figure.dataset.genre = genre.id;
   const img = document.createElement("img");
   img.src = genre.picture_big;
   img.draggable = false;
@@ -27,6 +28,7 @@ export function displayPlaylistPerso(genre, playlistId) {
   view.container.innerHTML = ""; // Clear existing genres
   const figure = document.createElement("figure");
   figure.dataset.playlist = playlistId;
+  figure.dataset.genre = genre.id;
   const img = document.createElement("img");
   img.draggable = false;
   img.src = genre.picture_big;

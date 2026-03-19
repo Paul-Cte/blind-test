@@ -36,6 +36,25 @@
         <section id="body-selection"></section>
       </div>
 
+      <div id="interface-options" class="hide">
+        <div id="genre-choisi"></div>
+ 
+        <div id="options-partie">
+          <h2>Paramètres de la partie</h2>
+ 
+          <div class="option-row">
+            <label for="guess-time">
+              <span class="option-label">Temps pour deviner</span>
+            </label>
+            <input id="guess-time" type="number" min="5" max="30" value="15" />
+          </div>
+        </div>
+        <div id="options-actions">
+          <button id="btn-options-retour" type="button">Retour</button>
+          <button id="btn-options-valider" type="button">Jouer</button>
+        </div>
+      </div>
+
       <div id="interface-partie" class="hide">
         <span id="score"></span>
         <span id="nb-tracks"></span>

@@ -13,7 +13,7 @@ export function renderQuestion(partie) {
   view.cover.src = track.album.cover_big;
   view.cover.style.filter = "blur(50px)";
 
-  view.timer.textContent = "15";
+  view.timer.textContent = partie.guessTime;
 
   // Création de l'audio
   const audio = document.createElement("audio");
@@ -39,9 +39,9 @@ export function renderQuestion(partie) {
     if (hasAnswered) {
       return;
     }
-    view.timer.textContent = 15 - Math.floor(audio.currentTime);
+    view.timer.textContent = partie.guessTime - Math.floor(audio.currentTime);
 
-    if (audio.currentTime >= 15) {
+    if (audio.currentTime >= partie.guessTime) {
       hasAnswered = true;
       audio.pause();
       view.timer.textContent = "";

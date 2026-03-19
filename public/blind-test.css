@@ -159,6 +159,16 @@ body {
   z-index: 10;
 }
 
+#options-partie {
+  height: 100vh;
+  width: 100%;
+  background-color: var(--background-color);
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 5;
+}
+
 #interface-ig-partie {
   display: flex;
   flex-direction: column;
