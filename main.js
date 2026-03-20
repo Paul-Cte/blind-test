@@ -1,19 +1,15 @@
 import { loadDefaultPlaylist } from "./controller/genreController.js";
+import { view } from "./view/view.js";
+import persist from "./model/persist.js";
 
-export const defaultPlaylists = {
-  "Rap/Hip Hop": 1071669561,
-  "Chanson française": 700895155,
-  Classique: 747148961,
-  "Films/Jeux vidéo": 1602126835,
-  Metal: 1050179021,
-};
 
 export async function initPlaylists() {
-  const playlistIds = Object.values(defaultPlaylists);
 
-  for (let index = 0; index < playlistIds.length; index++) {
-    await loadDefaultPlaylist(playlistIds[index], index);
-  }
+  await persist.build().then(async () => {
+    for (const [playlistId, playlistData] of Object.entries(persist.playlists)){
+      await loadDefaultPlaylist(playlistId, playlistData);
+    }
+  });
 }
 
 initPlaylists();
