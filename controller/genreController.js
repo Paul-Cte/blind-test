@@ -2,11 +2,8 @@ import { getPlaylistIdFromLink, getPlaylistTracks } from "../api/api.js";
 import { displayPlaylistPerso } from "../view/displayGenres.js";
 import { initPlaylists } from "../main.js";
 
-export async function loadDefaultPlaylist(playlistId, index) {
-  const playlistData = await getPlaylistTracks(playlistId);
-  if (playlistData) {
-    displayPlaylistPerso(playlistData, playlistId, index);
-  }
+export async function loadDefaultPlaylist(playlistId, playlistData) {
+  displayPlaylistPerso(playlistData, playlistId);
 }
 
 export async function loadPlaylistPerso(link) {

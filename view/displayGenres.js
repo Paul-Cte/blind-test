@@ -1,6 +1,6 @@
 import { view } from "./view.js";
 import { changeFavorites, removePlaylist } from "../controller/genreController.js";
-export function displayPlaylistPerso(playlistData, playlistId, index) {
+export function displayPlaylistPerso(playlistData, playlistId) {
   const figure = document.createElement("figure");
   figure.dataset.playlist = playlistId;
   figure.dataset.genre = "custom";
@@ -29,6 +29,6 @@ export function displayPlaylistPerso(playlistData, playlistId, index) {
   boutons.appendChild(boutonFavoris);
   boutons.appendChild(boutonSupprimer);
   figure.appendChild(boutons);
-  if (index === 0) figure.classList.add("active");
+  //if (index === 0) figure.classList.add("active");
   view.container.appendChild(figure);
 }
