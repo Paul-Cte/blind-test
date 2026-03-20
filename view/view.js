@@ -6,6 +6,9 @@ import {
 import { loadPlaylistPerso } from "../controller/genreController.js";
 
 export const view = {
+  body: document.querySelector("body"),
+
+  // Interface de sélection
   interfaceSelection: document.querySelector("#body-selection"),
 
   // Interface de la partie et ses éléments
@@ -68,6 +71,10 @@ view.interfaceSelection.addEventListener("click", (event) => {
   } else {
     figures.forEach((figure) => {
       figure.classList.add("active");
+      if (figure.contains(event.target)) {
+        startOptions(figure.dataset.playlist);
+        view.body.classList.add("no-scroll");
+      }
     });
   }
 });
@@ -84,6 +91,7 @@ view.btnQuitter.addEventListener("click", () => {
   view.cover.src = "";
   view.playlistTitle.textContent = "";
   view.interfacePartie.classList.add("hide");
+  view.body.classList.remove("no-scroll");
 });
 
 view.btnChercherPlaylist.addEventListener("click", async () => {
@@ -111,6 +119,7 @@ view.btnChercherPlaylist.addEventListener("click", async () => {
 
 view.btnOptionsRetour.addEventListener("click", () => {
   view.optionsPartie.classList.add("hide");
+  view.body.classList.remove("no-scroll");
 });
 
 view.btnOptionsValider.addEventListener("click", () => {
@@ -120,9 +129,7 @@ view.btnOptionsValider.addEventListener("click", () => {
 
 view.diffBtns.forEach((btn) => {
   btn.addEventListener("click", (e) => {
-    // On retire la classe active de tous les boutons
     view.diffBtns.forEach((b) => b.classList.remove("active"));
-    // On l'ajoute uniquement sur celui cliqué
     e.target.classList.add("active");
   });
 });

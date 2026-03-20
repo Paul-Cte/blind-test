@@ -1,5 +1,5 @@
 import { getPlaylistIdFromLink, getPlaylistTracks } from "../api/api.js";
-import { displayPlaylistPerso } from "../view/displayGenres.js";
+import { displayPlaylistPerso } from "../view/displayPlaylist.js";
 import { initPlaylists } from "../main.js";
 
 export async function loadDefaultPlaylist(playlistId, index) {
@@ -21,11 +21,9 @@ export async function loadPlaylistPerso(link) {
   }
 }
 
-export async function changeFavorites(playlistId){
+export async function changeFavorites(playlistId) {
   const playlistData = await getPlaylistTracks(playlistId);
   playlistData.favorite = !playlistData.favorite;
 }
 
-export async function removePlaylist(playlistId){
-  
-}
+export async function removePlaylist(playlistId) {}

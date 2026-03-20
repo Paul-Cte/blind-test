@@ -1,5 +1,4 @@
 import { loadDefaultPlaylist } from "./controller/genreController.js";
-import { view } from "./view/view.js";
 
 export const defaultPlaylists = {
   "Rap/Hip Hop": 1071669561,
@@ -10,7 +9,6 @@ export const defaultPlaylists = {
 };
 
 export async function initPlaylists() {
-  view.container.innerHTML = "";
   const playlistIds = Object.values(defaultPlaylists);
 
   for (let index = 0; index < playlistIds.length; index++) {
