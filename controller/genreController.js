@@ -20,3 +20,12 @@ export async function loadPlaylistPerso(link) {
     initGenres();
   }
 }
+
+export async function changeFavorites(playlistId){
+  const playlistData = await getPlaylistTracks(playlistId);
+  playlistData.favorite = !playlistData.favorite;
+}
+
+export async function removePlaylist(playlistId){
+  
+}
