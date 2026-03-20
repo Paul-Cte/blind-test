@@ -6,5 +6,6 @@ export class Playlist {
     this.title = data.title;
     this.cover = data.picture_big;
     this.tracks = data.tracks.data.map((trackData) => new Track(trackData));
+    this.favorite = false;
   }
 }
