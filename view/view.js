@@ -13,6 +13,10 @@ export const view = {
   container: document.querySelector("#body-selection"),
   optionsPartie: document.querySelector("#interface-options"),
   genreChoisi: document.querySelector("#genre-choisi"),
+  optionsPartie: document.querySelector("#interface-options"),
+  genreChoisi: document.querySelector("#genre-choisi"),
+  genreChoisiTitle: document.querySelector("#genre-choisi-title"),
+  genreChoisiImg: document.querySelector("#genre-choisi-img"),
 
   // Boutons et inputs
   btnQuitter: document.querySelector("#btn-quitter-bt"),
@@ -24,7 +28,8 @@ export const view = {
   playlistPerso: document.querySelector("#input-playlist"),
   btnChercherPlaylist: document.querySelector("#btn-charger"),
   btnRetour: document.querySelector("#btn-retour-genres"),
-  inputGuessTime: document.querySelector("#guess-time"),
+  diffBtns: document.querySelectorAll(".diff-btn"),
+  btnOptionsRetour: document.querySelector("#btn-options-retour"),
   btnOptionsRetour: document.querySelector("#btn-options-retour"),
   btnOptionsValider: document.querySelector("#btn-options-valider"),
 };

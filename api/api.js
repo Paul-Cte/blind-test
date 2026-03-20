@@ -1,4 +1,5 @@
 import { initGenres } from "../main.js";
+import { Playlist } from "../model/playlist.js";
 
 export async function getCategorie(genreId) {
   try {
@@ -31,7 +32,7 @@ export async function getPlaylistTracks(playlistId) {
       console.error("Erreur renvoyée par Deezer :", data.error);
       return null;
     }
-    return data;
+    return new Playlist(data);
   } catch (error) {
     console.error("Erreur avec l'API ou le proxy :", error);
     return null;
