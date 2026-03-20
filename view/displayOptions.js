@@ -1,16 +1,14 @@
 import { view } from "./view.js";
 
-export function startOptionsUI(playlistId, genre) {
-  // Masquer la sélection
+export function startOptionsUI(playlistId, playlist) {
   view.interfaceSelection.parentElement
     .querySelector("#interface-selection")
     ?.classList.add("hide");
 
   view.optionsPartie.classList.remove("hide");
-
-  view.genreChoisiTitle.textContent = genre.name ?? genre.title;
-  view.genreChoisiImg.src = genre.picture_big;
-  view.genreChoisiImg.alt = genre.name ?? genre.title;
+  view.genreChoisiTitle.textContent = playlist.title;
+  view.genreChoisiImg.src = playlist.cover;
+  view.genreChoisiImg.alt = playlist.title;
 
   view.optionsPartie.dataset.playlistId = playlistId;
 }

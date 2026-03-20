@@ -1,18 +1,5 @@
-import { initGenres } from "../main.js";
+import { initPlaylists } from "../main.js";
 import { Playlist } from "../model/playlist.js";
-
-export async function getCategorie(genreId) {
-  try {
-    const targetUrl = `https://api.deezer.com/genre/${genreId}`;
-    const myVercelProxy = "https://proxy-blind-test.vercel.app/api/deezer";
-    const proxyUrl = `${myVercelProxy}?url=${encodeURIComponent(targetUrl)}`;
-    const response = await fetch(proxyUrl);
-    const data = await response.json();
-    return data;
-  } catch (error) {
-    console.error("Erreur avec l'API ou le proxy :", error);
-  }
-}
 
 export async function getPlaylistTracks(playlistId) {
   if (!playlistId || playlistId === "undefined") {
@@ -65,7 +52,7 @@ export async function getPlaylistIdFromLink(link) {
     } catch (error) {
       console.error("Erreur lors de la lecture du lien court :", error);
       alert("Lien Deezer non reconnu. Veuillez vérifier le lien et réessayer.");
-      initGenres();
+      initPlaylists();
       return null;
     }
   }

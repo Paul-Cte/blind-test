@@ -20,8 +20,6 @@ export const view = {
   container: document.querySelector("#body-selection"),
   optionsPartie: document.querySelector("#interface-options"),
   genreChoisi: document.querySelector("#genre-choisi"),
-  optionsPartie: document.querySelector("#interface-options"),
-  genreChoisi: document.querySelector("#genre-choisi"),
   genreChoisiTitle: document.querySelector("#genre-choisi-title"),
   genreChoisiImg: document.querySelector("#genre-choisi-img"),
 
@@ -37,7 +35,6 @@ export const view = {
   btnRetour: document.querySelector("#btn-retour-genres"),
   diffBtns: document.querySelectorAll(".diff-btn"),
   btnOptionsRetour: document.querySelector("#btn-options-retour"),
-  btnOptionsRetour: document.querySelector("#btn-options-retour"),
   btnOptionsValider: document.querySelector("#btn-options-valider"),
 };
 
@@ -50,7 +47,7 @@ view.interfaceSelection.addEventListener("click", (event) => {
     figures.forEach((figure) => {
       if (figure.contains(event.target)) {
         if (figure.classList.contains("active")) {
-          startOptions(figure.dataset.genre, figure.dataset.playlist);
+          startOptions(figure.dataset.playlist);
         } else {
           figures.forEach((figure) => {
             figure.classList.remove("active");
