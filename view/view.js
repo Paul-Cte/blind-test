@@ -26,5 +26,5 @@ export const view = {
   btnRetour: document.querySelector("#btn-retour-genres"),
   inputGuessTime: document.querySelector("#guess-time"),
   btnOptionsRetour: document.querySelector("#btn-options-retour"),
-  btnOptionsValider: document.querySelector("#btn-options-valider")
+  btnOptionsValider: document.querySelector("#btn-options-valider"),
 };

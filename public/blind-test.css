@@ -159,7 +159,7 @@ body {
   z-index: 10;
 }
 
-#options-partie {
+#interface-options {
   height: 100vh;
   width: 100%;
   background-color: var(--background-color);
@@ -167,6 +167,14 @@ body {
   top: 0;
   left: 0;
   z-index: 5;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+#interface-options.hide {
+  display: none;
 }
 
 #interface-ig-partie {
