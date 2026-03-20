@@ -5,9 +5,9 @@ import { view } from "./view/view.js";
 export let idGenres = {
   "Rap/Hip Hop": { genreId: 116, playlistId: 1071669561 },
   "Chanson française": { genreId: 52, playlistId: 700895155 },
-  "Classique": { genreId: 98, playlistId: 747148961 },
+  Classique: { genreId: 98, playlistId: 747148961 },
   "Films/Jeux vidéo": { genreId: 173, playlistId: 1602126835 },
-  "Metal": { genreId: 464, playlistId: 1050179021 },
+  Metal: { genreId: 464, playlistId: 1050179021 },
 };
 
 export async function initGenres() {

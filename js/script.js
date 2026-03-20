@@ -1,6 +1,9 @@
 // a
-import { startGame } from "../controller/gameController.js"
-import { startOptions, validateOptions } from "../controller/optionsController.js";
+import { startGame } from "../controller/gameController.js";
+import {
+  startOptions,
+  validateOptions,
+} from "../controller/optionsController.js";
 import { view } from "../view/view.js";
 import { loadPlaylistPerso } from "../controller/genreController.js";
 import { initGenres } from "../main.js";
@@ -78,9 +81,18 @@ view.btnChercherPlaylist.addEventListener("click", async () => {
 
 view.btnOptionsRetour.addEventListener("click", () => {
   view.optionsPartie.classList.add("hide");
-})
+});
 
 view.btnOptionsValider.addEventListener("click", () => {
-    view.optionsPartie.classList.add("hide");
-    startGame(validateOptions());
-})
+  view.optionsPartie.classList.add("hide");
+  startGame(validateOptions());
+});
+
+view.diffBtns.forEach((btn) => {
+  btn.addEventListener("click", (e) => {
+    // On retire la classe active de tous les boutons
+    view.diffBtns.forEach((b) => b.classList.remove("active"));
+    // On l'ajoute uniquement sur celui cliqué
+    e.target.classList.add("active");
+  });
+});

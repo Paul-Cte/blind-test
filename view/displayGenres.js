@@ -24,16 +24,16 @@ export function displayGenre(genre, index, playlistId) {
   view.container.appendChild(figure);
 }
 
-export function displayPlaylistPerso(genre, playlistId) {
+export function displayPlaylistPerso(playlistData, playlistId) {
   view.container.innerHTML = ""; // Clear existing genres
   const figure = document.createElement("figure");
   figure.dataset.playlist = playlistId;
   figure.dataset.genre = genre.id;
   const img = document.createElement("img");
   img.draggable = false;
-  img.src = genre.picture_big;
+  img.src = playlistData.cover;
   const figcaption = document.createElement("figcaption");
-  figcaption.textContent = genre.title;
+  figcaption.textContent = playlistData.title;
   figure.classList.add("active");
   figure.appendChild(img);
   figure.appendChild(figcaption);

@@ -10,7 +10,7 @@ export function renderQuestion(partie) {
   let track = partie.getCurrentTrack();
   console.log(track.title); // pour tester les réponses
   view.response.textContent = "";
-  view.cover.src = track.album.cover_big;
+  view.cover.src = track.cover;
   view.cover.style.filter = "blur(50px)";
 
   view.timer.textContent = partie.guessTime;
@@ -119,7 +119,7 @@ export function renderQuestion(partie) {
 export function showAnswer(partie, answer) {
   const track = partie.getCurrentTrack();
   const isCorrect = partie.checkAnswer(answer);
-  view.response.textContent = `${track.title} - ${track.artist.name}`;
+  view.response.textContent = `${track.title} - ${track.artist}`;
   if (isCorrect) {
     view.response.textContent += " : Bonne réponse !";
     view.response.style.color = "green";

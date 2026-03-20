@@ -37,27 +37,40 @@
       </div>
 
       <div id="interface-options" class="hide">
-        <div id="genre-choisi"></div>
-
-        <div id="options-partie">
-          <h2>Paramètres de la partie</h2>
-
-          <div class="option-row">
-            <label for="guess-time">
-              <span class="option-label">Temps pour deviner</span>
-            </label>
-            <input id="guess-time" type="number" min="5" max="30" value="15" />
+        <div id="genre-choisi">
+          <div id="genre-choisi-figure">
+            <h1 id="genre-choisi-title"></h1>
+            <img id="genre-choisi-img" src="" alt="" draggable="false" />
           </div>
         </div>
-        <div id="options-actions">
-          <button id="btn-options-retour" type="button">Retour</button>
-          <button id="btn-options-valider" type="button">Jouer</button>
+
+        <div id="options-partie">
+          <h2>Paramètres</h2>
+
+          <div class="option-row">
+            <span class="option-label">Difficulté (Temps de réponse)</span>
+            <div id="difficulty-buttons">
+              <button class="diff-btn" data-time="30">Facile (30s)</button>
+              <button class="diff-btn active" data-time="20">
+                Moyen (20s)
+              </button>
+              <button class="diff-btn" data-time="10">Difficile (10s)</button>
+            </div>
+          </div>
+
+          <div id="options-actions">
+            <button id="btn-options-retour" type="button">Retour</button>
+            <button id="btn-options-valider" type="button">Jouer !</button>
+          </div>
         </div>
       </div>
 
       <div id="interface-partie" class="hide">
-        <span id="score"></span>
-        <span id="nb-tracks"></span>
+        <div id="info-partie">
+          <span id="score"></span>
+          <span id="nb-tracks"></span>
+        </div>
+
         <button id="btn-quitter-bt">Quitter</button>
         <div id="interface-ig-partie">
           <h1 id="playlist-title"></h1>
