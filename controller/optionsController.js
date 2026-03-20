@@ -1,22 +1,17 @@
-/*import { startOptionsUI } from "../view/displayOptions.js";
-import { getCategorie } from "../api/api.js";
+import {
+  startOptionsUI,
+  hideOptionsUI,
+  getOptionsValues,
+} from "../view/displayOptions.js";
+import { getPlaylistTracks } from "../api/api.js";
 
-export async function startOptions(genreId, playlistId) {
-  const genre = await getCategorie(genreId);
-  startOptionsUI(playlistId, genre);
-}
-*/
-
-import { startOptionsUI, hideOptionsUI, getOptionsValues } from "../view/displayOptions.js";
-import { getCategorie } from "../api/api.js";
-
-export async function startOptions(genreId, playlistId) {
-  const genre = await getCategorie(genreId);
-  startOptionsUI(playlistId, genre);
+export async function startOptions(playlistId) {
+  const playlistData = await getPlaylistTracks(playlistId);
+  startOptionsUI(playlistId, playlistData);
 }
 
 export function validateOptions() {
   const options = getOptionsValues();
   hideOptionsUI();
-  return options; // { guessTime, songTime, playlistId } — à brancher sur startGame quand besoin
+  return options;
 }
