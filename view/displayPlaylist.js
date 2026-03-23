@@ -42,6 +42,9 @@ export function displayPlaylistPerso(playlistData, playlistId) {
 }
 
 export function displayAddPlaylist(){
-  // FAIRE UNE PETITE ANNOTATION "IL FAUT AJOUTER UNE PLAYLIST"
-  alert("il faut ajouter des playlist GROSSE MERDE");
+  const figure = document.createElement("figure");
+  const figcaption = document.createElement("figcaption");
+  figcaption.textContent = "Il faut ajouter une playlist";
+  figure.appendChild(figcaption);
+  view.container.appendChild(figure);
 }
