@@ -1,5 +1,7 @@
 let instance;
 import {getPlaylistTracks} from "../api/api.js";
+import { Playlist } from "./playlist.js";
+
 
 class Persist{
     
@@ -11,11 +13,16 @@ class Persist{
     }
 
     async build(){
-        await this.add(1071669561);
-        await this.add(700895155);
-        await this.add(747148961);
-        await this.add(1602126835);
-        await this.add(1050179021);
+        const storage = localStorage.getItem("playlists");
+        if (storage){
+            this.loadStorage(storage);
+        } else {
+            await this.add(1071669561);
+            await this.add(700895155);
+            await this.add(747148961);
+            await this.add(1602126835);
+            await this.add(1050179021);
+        }
     }
 
     getInstance(){
@@ -24,7 +31,7 @@ class Persist{
 
     getFavorites() {
         const favorites = [];
-        this.playlists.forEach(element => {
+        Object.values(this.playlists).forEach(element => {
             if (element.favorite) favorites.push(element);
         });
         return favorites;
@@ -34,9 +41,11 @@ class Persist{
         const newPlaylist = await getPlaylistTracks(playlistId);
         if (newPlaylist){
             this.playlists[playlistId] = newPlaylist;
+            localStorage.setItem("playlists", JSON.stringify(this));
+            return newPlaylist;
         }
         else{
-            alert("Erreur : playlist n'existe pas");
+            throw new Error("Erreur : playlist n'existe pas");
         }
     }
 
@@ -58,6 +67,14 @@ class Persist{
 
   saveToLocalStorage() {
     localStorage.setItem("playlists", JSON.stringify(this));
+  }
+
+  loadStorage(storage){
+    const data = JSON.parse(storage);
+    this.playlists = {};
+    Object.values(data.playlists).forEach(p => {
+        this.playlists[p.id] = Playlist.loadStorage(p);
+    });
   }
 }
 

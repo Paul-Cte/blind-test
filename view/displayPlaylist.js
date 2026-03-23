@@ -40,3 +40,8 @@ export function displayPlaylistPerso(playlistData, playlistId) {
   //if (index === 0) figure.classList.add("active");
   view.container.appendChild(figure);
 }
+
+export function displayAddPlaylist(){
+  // FAIRE UNE PETITE ANNOTATION "IL FAUT AJOUTER UNE PLAYLIST"
+  alert("il faut ajouter des playlist GROSSE MERDE");
+}

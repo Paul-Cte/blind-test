@@ -9,15 +9,9 @@ export async function loadDefaultPlaylist(playlistId, playlistData) {
 
 export async function loadPlaylistPerso(link) {
   const playlistId = await getPlaylistIdFromLink(link);
-  // await add persist
-  // then display
   if (playlistId) {
-    const playlistData = await getPlaylistTracks(playlistId);
-    if (playlistData) {
-      displayPlaylistPerso(playlistData, playlistId);
-    }
-  } else {
-    initPlaylists();
+    const playlistData = await persist.add(playlistId);
+    displayPlaylistPerso(playlistData, playlistId);
   }
 }
 
