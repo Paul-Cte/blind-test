@@ -63,7 +63,7 @@ body.no-scroll {
   background-color: white;
 }
 
-#body-selection {
+.playlist-container {
   display: flex;
   flex-direction: row;
   gap: 70px;
@@ -72,7 +72,7 @@ body.no-scroll {
   padding-left: 140px;
 }
 
-#body-selection > figure {
+.playlist-container > figure {
   cursor: pointer;
   filter: brightness(35%);
   transition: 0.2s ease-in-out;
@@ -82,23 +82,23 @@ body.no-scroll {
   align-items: center;
 }
 
-#body-selection > figure.active {
+.playlist-container > figure.active {
   filter: brightness(100%);
   transform: scale(1.1);
 }
 
-#body-selection > figure > img {
+.playlist-container > figure > img {
   border-radius: 25px;
   height: auto;
   width: calc((100vw - 420px) / 3);
   transition: 0.2s ease-in-out;
 }
 
-#body-selection > figure > img:hover {
+.playlist-container > figure > img:hover {
   transform: scale(0.98);
 }
 
-#body-selection > figure > figcaption {
+.playlist-container > figure > figcaption {
   text-align: center;
   text-transform: uppercase;
   font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
@@ -112,17 +112,17 @@ body.no-scroll {
 }
 
 @media (max-width: 1250px) {
-  #body-selection > figure > img {
+  .playlist-container > figure > img {
     width: calc((100vw - 350px) / 2);
   }
 
-  #body-selection > figure > figcaption {
+  .playlist-container > figure > figcaption {
     font-size: 1.5rem;
   }
 }
 
 @media (max-width: 900px) {
-  #body-selection {
+  .playlist-container {
     flex-direction: column;
     align-items: center;
     gap: 30px;
@@ -131,7 +131,7 @@ body.no-scroll {
     overflow: auto;
   }
 
-  #body-selection > figure {
+  .playlist-container > figure {
     filter: brightness(100%);
     gap: 10px;
     display: flex;
@@ -140,15 +140,15 @@ body.no-scroll {
     width: 100%;
   }
 
-  #body-selection > figure.active {
+  .playlist-container > figure.active {
     transform: scale(1);
   }
 
-  #body-selection > figure > img {
+  .playlist-container > figure > img {
     width: 90%;
   }
 
-  #body-selection > figure > figcaption {
+  .playlist-container > figure > figcaption {
     font-size: 1.3rem;
   }
 

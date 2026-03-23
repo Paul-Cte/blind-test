@@ -9,7 +9,9 @@ export const view = {
   body: document.querySelector("body"),
 
   // Interface de sélection
-  interfaceSelection: document.querySelector("#body-selection"),
+  interfaceSelection: document.querySelector("#interface-selection"),
+  container: document.querySelector("#body-selection"),
+  containerFavorites: document.querySelector("#favorites-selection"),
 
   // Interface de la partie et ses éléments
   interfacePartie: document.querySelector("#interface-partie"),
@@ -41,41 +43,44 @@ export const view = {
   btnOptionsValider: document.querySelector("#btn-options-valider"),
 };
 
-let currentTranslate = 0;
-
 view.interfaceSelection.addEventListener("click", (event) => {
-  const figures = view.interfaceSelection.querySelectorAll("figure");
+  // On vérifie si on a bien cliqué sur une playlist (figure)
+  const clickedFigure = event.target.closest("figure");
+  if (!clickedFigure) return;
+
+  // On identifie dans QUELLE liste (favoris ou principale) on se trouve
+  const container = clickedFigure.closest(".playlist-container");
+  if (!container) return;
+
+  const figures = container.querySelectorAll("figure");
 
   if (window.innerWidth > 900) {
-    figures.forEach((figure) => {
-      if (figure.contains(event.target)) {
-        if (figure.classList.contains("active")) {
-          startOptions(figure.dataset.playlist);
-        } else {
-          figures.forEach((figure) => {
-            figure.classList.remove("active");
-          });
-          figure.classList.add("active");
-          const dimensions = figure.getBoundingClientRect();
+    if (clickedFigure.classList.contains("active")) {
+      // Si elle est déjà au centre, on lance le jeu
+      startOptions(clickedFigure.dataset.playlist);
+    } else {
+      // Sinon, on désactive les autres figures de CETTE liste uniquement
+      figures.forEach((figure) => figure.classList.remove("active"));
+      clickedFigure.classList.add("active");
 
-          if (dimensions.right > window.innerWidth) {
-            currentTranslate += dimensions.width + 70;
-            view.interfaceSelection.style.transform = `translateX(-${currentTranslate}px)`;
-          } else if (dimensions.left < 0) {
-            currentTranslate -= dimensions.width + 70;
-            view.interfaceSelection.style.transform = `translateX(-${currentTranslate}px)`;
-          }
-        }
+      const dimensions = clickedFigure.getBoundingClientRect();
+
+      let currentTranslate = parseInt(container.dataset.translate || 0);
+
+      if (dimensions.right > window.innerWidth) {
+        currentTranslate += dimensions.width + 70;
+        container.style.transform = `translateX(-${currentTranslate}px)`;
+        container.dataset.translate = currentTranslate;
+      } else if (dimensions.left < 0) {
+        currentTranslate -= dimensions.width + 70;
+        container.style.transform = `translateX(-${currentTranslate}px)`;
+        container.dataset.translate = currentTranslate;
       }
-    });
+    }
   } else {
-    figures.forEach((figure) => {
-      figure.classList.add("active");
-      if (figure.contains(event.target)) {
-        startOptions(figure.dataset.playlist);
-        view.body.classList.add("no-scroll");
-      }
-    });
+    clickedFigure.classList.add("active");
+    startOptions(clickedFigure.dataset.playlist);
+    view.body.classList.add("no-scroll");
   }
 });
 

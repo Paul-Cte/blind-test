@@ -7,7 +7,11 @@ import {
 import { initPlaylists } from "../main.js";
 import persist from "../model/persist.js";
 
-export function displayPlaylistPerso(playlistData, playlistId) {
+export function displayPlaylistPerso(
+  playlistData,
+  playlistId,
+  targetContainer = view.container,
+) {
   const figure = document.createElement("figure");
   figure.dataset.playlist = playlistId;
   const img = document.createElement("img");
@@ -41,10 +45,27 @@ export function displayPlaylistPerso(playlistData, playlistId) {
     e.stopPropagation();
     changeFavorites(playlistId);
     const isFav = estFavoris(playlistId);
-    const svg = boutonFavoris.querySelector("svg");
+    const toutesLesFigures = document.querySelectorAll(
+      `figure[data-playlist="${playlistId}"]`,
+    );
+    toutesLesFigures.forEach((fig) => {
+      const svg = fig.querySelector(".heart-icon");
+      if (svg) {
+        svg.setAttribute("fill", isFav ? "var(--deezer-purple)" : "none");
+        svg.setAttribute("stroke", isFav ? "var(--deezer-purple)" : "white");
+      }
+    });
 
-    svg.setAttribute("fill", isFav ? "var(--deezer-purple)" : "none");
-    svg.setAttribute("stroke", isFav ? "var(--deezer-purple)" : "white");
+    if (isFav) {
+      displayPlaylistPerso(playlistData, playlistId, view.containerFavorites);
+    } else {
+      const figureDansFavoris = view.containerFavorites.querySelector(
+        `figure[data-playlist="${playlistId}"]`,
+      );
+      if (figureDansFavoris) {
+        figureDansFavoris.remove();
+      }
+    }
   });
 
   // --- BOUTON SUPPRIMER ---
@@ -66,11 +87,11 @@ export function displayPlaylistPerso(playlistData, playlistId) {
   figure.appendChild(boutons);
 
   // --- GESTION DE LA POSITION (TOUT À GAUCHE) ET ACTIF ---
-  const figuresExistantes = view.container.querySelectorAll("figure");
+  const figuresExistantes = targetContainer.querySelectorAll("figure");
   figuresExistantes.forEach((fig) => fig.classList.remove("active"));
 
   figure.classList.add("active");
-  view.container.prepend(figure);
+  targetContainer.prepend(figure);
 }
 
 export function displayAddPlaylist() {
