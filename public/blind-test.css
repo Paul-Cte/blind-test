@@ -76,6 +76,10 @@ body.no-scroll {
   cursor: pointer;
   filter: brightness(35%);
   transition: 0.2s ease-in-out;
+  width: calc((100vw - 420px) / 3);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 #body-selection > figure.active {
@@ -101,6 +105,10 @@ body.no-scroll {
   font-size: 2rem;
   font-weight: 600;
   color: white;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  width: 100%;
 }
 
 @media (max-width: 1250px) {
@@ -614,7 +622,6 @@ body.no-scroll {
   justify-content: space-around;
 }
 
-.btn-fav,
 .btn-supp {
   width: 45%;
   padding: 12px 30px;
@@ -628,5 +635,51 @@ body.no-scroll {
   color: white;
 }
 
+.boutons {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  gap: 20px;
+  width: 100%;
+  margin-top: 10px;
+}
+
+.btn-fav-svg {
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform 0.2s ease-in-out;
+  padding: 5px;
+}
+
+.btn-fav-svg:hover {
+  transform: scale(1.15);
+}
+
+.heart-icon {
+  transition:
+    fill 0.3s ease,
+    stroke 0.3s ease;
+}
+
 .btn-supp {
+  width: auto;
+  padding: 8px 20px;
+  border-radius: 8px;
+  font-size: 1rem;
+  cursor: pointer;
+  font-weight: bold;
+  transition: 0.2s;
+  background-color: transparent;
+  border: 2px solid white;
+  color: white;
+}
+
+.btn-supp:hover {
+  background-color: white;
+  color: black;
 }
