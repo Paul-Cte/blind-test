@@ -3,13 +3,15 @@ import { view } from "./view/view.js";
 import persist from "./model/persist.js";
 
 
-export async function initPlaylists() {
+// LOAD DEPUIS LA LOCALSTORAGE
 
-  await persist.build().then(async () => {
-    for (const [playlistId, playlistData] of Object.entries(persist.playlists)){
+export async function initPlaylists() {
+  view.interfaceSelection.innerHTML = "";
+  for (const [playlistId, playlistData] of Object.entries(persist.playlists)){
       await loadDefaultPlaylist(playlistId, playlistData);
-    }
-  });
+  };
 }
 
-initPlaylists();
+await persist.build().then(async () => {
+  initPlaylists();
+});

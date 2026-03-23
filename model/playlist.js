@@ -8,4 +8,8 @@ export class Playlist {
     this.tracks = data.tracks.data.map((trackData) => new Track(trackData));
     this.favorite = false;
   }
+
+  changeFavorites(){
+    this.favorite = !this.favorite;
+  }
 }
