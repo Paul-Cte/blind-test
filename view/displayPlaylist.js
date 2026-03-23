@@ -1,8 +1,9 @@
 import { view } from "./view.js";
-import {
-  changeFavorites,
-  removePlaylist,
-} from "../controller/genreController.js";
+import { changeFavorites, removePlaylist, estFavoris } from "../controller/genreController.js";
+import { initPlaylists } from "../main.js";
+import persist from "../model/persist.js";
+
+
 export function displayPlaylistPerso(playlistData, playlistId) {
   const figure = document.createElement("figure");
   figure.dataset.playlist = playlistId;
@@ -20,19 +21,33 @@ export function displayPlaylistPerso(playlistData, playlistId) {
   boutonFavoris.addEventListener("click", (e) => {
     e.stopPropagation();
     changeFavorites(playlistId);
+    initPlaylists();
   });
+  const marqueurFavoris = document.createElement("p");
+  estFavoris(playlistId) ? marqueurFavoris.textContent = "FAVORIS" : marqueurFavoris.textContent = "NON FAVORIS";
   const boutonSupprimer = document.createElement("button");
   boutonSupprimer.textContent = "Supprimer";
   boutonSupprimer.addEventListener("click", (e) => {
     e.stopPropagation();
-    removePlaylist(playlistId);
+    persist.remove(playlistId);
+    initPlaylists();
+    persist.saveToLocalStorage();
   });
   boutonFavoris.classList.add("btn-fav");
   boutonSupprimer.classList.add("btn-supp");
   boutons.classList.add("boutons");
   boutons.appendChild(boutonFavoris);
   boutons.appendChild(boutonSupprimer);
+  boutons.appendChild(marqueurFavoris);
   figure.appendChild(boutons);
   //if (index === 0) figure.classList.add("active");
+  view.container.appendChild(figure);
+}
+
+export function displayAddPlaylist(){
+  const figure = document.createElement("figure");
+  const figcaption = document.createElement("figcaption");
+  figcaption.textContent = "Il faut ajouter une playlist";
+  figure.appendChild(figcaption);
   view.container.appendChild(figure);
 }
