@@ -33,6 +33,9 @@ export function displayPlaylistPerso(playlistData, playlistId) {
     initPlaylists();
     persist.saveToLocalStorage();
   });
+  boutonFavoris.classList.add("btn-fav");
+  boutonSupprimer.classList.add("btn-supp");
+  boutons.classList.add("boutons");
   boutons.appendChild(boutonFavoris);
   boutons.appendChild(boutonSupprimer);
   boutons.appendChild(marqueurFavoris);
