@@ -1,6 +1,8 @@
 import { view } from "./view.js";
 import { changeFavorites, removePlaylist, estFavoris } from "../controller/genreController.js";
 import { initPlaylists } from "../main.js";
+import persist from "../model/persist.js";
+
 
 export function displayPlaylistPerso(playlistData, playlistId) {
   const figure = document.createElement("figure");
@@ -19,6 +21,7 @@ export function displayPlaylistPerso(playlistData, playlistId) {
   boutonFavoris.addEventListener("click", (e) => {
     e.stopPropagation();
     changeFavorites(playlistId);
+    initPlaylists();
   });
   const marqueurFavoris = document.createElement("p");
   estFavoris(playlistId) ? marqueurFavoris.textContent = "FAVORIS" : marqueurFavoris.textContent = "NON FAVORIS";
@@ -26,8 +29,9 @@ export function displayPlaylistPerso(playlistData, playlistId) {
   boutonSupprimer.textContent = "Supprimer";
   boutonSupprimer.addEventListener("click", (e) => {
     e.stopPropagation();
-    removePlaylist(playlistId);
+    persist.remove(playlistId);
     initPlaylists();
+    persist.saveToLocalStorage();
   });
   boutons.appendChild(boutonFavoris);
   boutons.appendChild(boutonSupprimer);

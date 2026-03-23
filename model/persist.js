@@ -41,14 +41,19 @@ class Persist{
     }
 
     remove(playlistId){
-        this.playlists.values.forEach(element => {
-            if (element.playlistId === playlistId){
-                this.playlists.splice(this.playlists.indexOf(element));
-                saveToLocalStorage();
-                return;
-            }
-        });
-        alert("Erreur : n'existe pas dans la liste playlist");
+        // Object.values(this.playlists).forEach(element => {
+        //     alert(element.id);
+        //     if (element.id == playlistId){
+        //         alert("a");
+        //         delete this.playlists.playlistId;
+        //         this.saveToLocalStorage();
+        //         return true;
+        //     }
+        // });
+        // alert(playlistId)
+        // alert("Erreur : n'existe pas dans la liste playlist");
+        delete this.playlists[playlistId];
+        this.saveToLocalStorage();
     }
 
   saveToLocalStorage() {
