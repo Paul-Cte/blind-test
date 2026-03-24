@@ -1,6 +1,8 @@
 import { startGame } from "../controller/gameController.js";
-import { Slider } from "./slider.js";
-import { startOptions, validateOptions } from "../controller/optionsController.js";
+import {
+  startOptions,
+  validateOptions,
+} from "../controller/optionsController.js";
 import { loadPlaylistPerso } from "../controller/genreController.js";
 import { initPlaylists } from "../main.js";
 
@@ -45,18 +47,18 @@ export const view = {
 };
 
 // --- SLIDERS ---
-if (window.innerWidth > 900) {
-  new Slider(view.container, (playlistId) => startOptions(playlistId));
-  new Slider(view.containerFavorites, (playlistId) => startOptions(playlistId));
-} else {
-  view.interfaceSelection.addEventListener("click", (e) => {
-    const figure = e.target.closest("figure");
-    if (!figure) return;
-    figure.classList.add("active");
+view.interfaceSelection.addEventListener("click", (e) => {
+  // On cherche si on a cliqué sur une figure (une carte)
+  const figure = e.target.closest("figure");
+
+  // Si on clique sur un bouton "Favoris" ou "Supprimer", on ne lance pas la partie
+  if (e.target.closest("button")) return;
+
+  if (figure && figure.dataset.playlist) {
     startOptions(figure.dataset.playlist);
     view.body.classList.add("no-scroll");
-  });
-}
+  }
+});
 
 // --- BOUTON QUITTER ---
 view.btnQuitter.addEventListener("click", () => {
@@ -72,6 +74,8 @@ view.btnQuitter.addEventListener("click", () => {
   view.playlistTitle.textContent = "";
   view.interfacePartie.classList.add("hide");
   view.body.classList.remove("no-scroll");
+
+  view.interfaceSelection.classList.remove("hide");
 });
 
 // --- BOUTON CHARGER PLAYLIST ---
@@ -115,6 +119,7 @@ view.btnChercherPlaylist.addEventListener("click", async () => {
 view.btnOptionsRetour.addEventListener("click", () => {
   view.optionsPartie.classList.add("hide");
   view.body.classList.remove("no-scroll");
+  view.interfaceSelection.classList.remove("hide");
 });
 
 view.btnOptionsValider.addEventListener("click", () => {

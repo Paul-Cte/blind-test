@@ -1,5 +1,7 @@
 import { view } from "./view.js";
 
+let currentAudio = null;
+
 export function startGameUI(partie, title) {
   view.interfacePartie.classList.remove("hide");
   view.playlistTitle.textContent = title;
@@ -7,69 +9,99 @@ export function startGameUI(partie, title) {
 }
 
 export function renderQuestion(partie) {
-  let track = partie.getCurrentTrack();
-  console.log(track.title); // pour tester les réponses
+  const track = partie.getCurrentTrack();
+  console.log("Piste actuelle :", track.title);
+
+  // Réinitialiser et préparer l'interface visuelle
+  setupQuestionUI(partie, track);
+
+  // Lancer la musique et gérer le chronomètre
+  // On récupère un objet de contrôle pour gérer les réponses
+  const control = manageAudioAndTimer(partie, track);
+
+  // Gérer l'autocomplétion de la barre de recherche
+  setupSuggestions(partie);
+
+  // Assigner les actions aux boutons (Valider, Suivant, Skip)
+  setupGameButtons(partie, control);
+}
+
+function setupQuestionUI(partie, track) {
   view.response.textContent = "";
   view.cover.src = track.cover;
   view.cover.style.filter = "blur(50px)";
-
   view.timer.textContent = partie.guessTime;
 
-  // Création de l'audio
-  const audio = document.createElement("audio");
-  audio.src = track.preview;
-  audio.controls = false;
-  audio.autoplay = true;
-  view.player.appendChild(audio);
-
-  // bouton suivant disabled
+  // Désactivation des boutons en début de manche
   view.btnSuivant.classList.add("disabled");
   view.btnSuivant.disabled = true;
   view.btnValider.disabled = true;
   view.btnValider.classList.add("disabled");
 
-  // affichage score et nb de musique
   updateScore(partie);
   updateNbTracks(partie);
+}
+
+function manageAudioAndTimer(partie, track) {
+  // Nettoyer l'audio précédent s'il y en a un
+  if (currentAudio) {
+    currentAudio.pause();
+    currentAudio.remove();
+  }
+
+  currentAudio = document.createElement("audio");
+  currentAudio.src = track.preview;
+  currentAudio.autoplay = true;
+  view.player.appendChild(currentAudio);
 
   let hasAnswered = false;
-  let answer = "";
 
-  audio.addEventListener("timeupdate", () => {
-    if (hasAnswered) {
-      return;
-    }
-    view.timer.textContent = partie.guessTime - Math.floor(audio.currentTime);
+  // Fonction interne appelée quand le temps est écoulé ou validé manuellement
+  const triggerAnswer = (manualAnswer = null) => {
+    if (hasAnswered) return;
+    hasAnswered = true;
+    currentAudio.pause();
+    view.timer.textContent = "";
 
-    if (audio.currentTime >= partie.guessTime) {
-      hasAnswered = true;
-      audio.pause();
-      view.timer.textContent = "";
-      answer = view.inputResponse.value ?? "";
-      showAnswer(partie, answer);
+    // Si la réponse n'est pas manuelle, on prend ce qu'il y a dans l'input
+    const finalAnswer = manualAnswer ?? view.inputResponse.value ?? "";
+    showAnswer(partie, finalAnswer);
+  };
+
+  currentAudio.addEventListener("timeupdate", () => {
+    if (hasAnswered) return;
+
+    view.timer.textContent =
+      partie.guessTime - Math.floor(currentAudio.currentTime);
+
+    if (currentAudio.currentTime >= partie.guessTime) {
+      triggerAnswer();
     } else {
+      // Activer le bouton valider dès que la musique tourne
       view.btnValider.disabled = false;
       view.btnValider.classList.remove("disabled");
     }
   });
 
-  audio.addEventListener("ended", () => {
-    if (hasAnswered) return;
+  currentAudio.addEventListener("ended", () => triggerAnswer());
 
-    hasAnswered = true;
-    view.timer.textContent = "";
-    answer = view.inputResponse.value ?? "";
-    showAnswer(partie, answer);
-  });
+  // On retourne de quoi contrôler manuellement la validation depuis les boutons
+  return {
+    triggerAnswer,
+    stopAudio: () => {
+      currentAudio.pause();
+      currentAudio.remove();
+    },
+  };
+}
 
-  // --- GESTION DES SUGGESTIONS ---
+function setupSuggestions(partie) {
   view.inputResponse.oninput = (e) => {
     const textTaped = e.target.value;
     const suggestions = partie.getSuggestions(textTaped);
 
-    view.suggestionsList.innerHTML = ""; // On vide l'ancienne liste
+    view.suggestionsList.innerHTML = "";
 
-    // Si on a tapé au moins 2 lettres et qu'il y a des résultats
     if (textTaped.length > 1 && suggestions.length > 0) {
       view.suggestionsList.classList.remove("hide");
 
@@ -77,10 +109,9 @@ export function renderQuestion(partie) {
         const li = document.createElement("li");
         li.textContent = titre;
 
-        // Si le joueur clique sur une suggestion
         li.onclick = () => {
-          view.inputResponse.value = titre; // Remplir l'input
-          view.suggestionsList.classList.add("hide"); // Cacher la liste
+          view.inputResponse.value = titre;
+          view.suggestionsList.classList.add("hide");
           view.suggestionsList.innerHTML = "";
         };
 
@@ -90,27 +121,20 @@ export function renderQuestion(partie) {
       view.suggestionsList.classList.add("hide");
     }
   };
+}
 
-  // clique sur le bouton valider
+function setupGameButtons(partie, control) {
   view.btnValider.onclick = () => {
-    // Paul qui dit ça pas ia : ici j'ai mis onclick car ça permet de ne pas surcharger le nombre dévenement et d'éviter les bugs
-    hasAnswered = true;
-    audio.pause();
-    answer = view.inputResponse.value ?? "";
-    showAnswer(partie, answer);
+    control.triggerAnswer(view.inputResponse.value ?? "");
   };
 
-  //clique sur le bouton suivant
   view.btnSuivant.onclick = () => {
-    // Paul qui dit ça pas ia : ici j'ai mis onclick car ça permet de ne pas surcharger le nombre dévenement et d'éviter les bugs
-    audio.pause();
-    audio.remove();
+    control.stopAudio();
     endRound(partie);
   };
 
   view.btnSkip.onclick = () => {
-    audio.pause();
-    audio.remove();
+    control.stopAudio();
     view.inputResponse.value = "";
     endRound(partie);
   };

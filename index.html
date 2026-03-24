@@ -11,6 +11,29 @@
     <main>
       <div id="interface-selection">
         <section id="header-selection">
+
+          <div class="search-wrapper">
+            <input
+              type="link"
+              id="input-playlist"
+              placeholder="Colle l'URL d'une playlist Deezer ici..."
+            />
+            <button id="btn-charger" title="Charger la playlist">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="24"
+                height="24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                viewBox="0 0 24 24"
+              >
+                <circle cx="11" cy="11" r="8"></circle>
+                <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+              </svg>
+            </button>
+          </div>
+
           <input
             type="text"
             id="input-recherche"
@@ -30,40 +53,18 @@
               <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
             </svg>
           </button>
-          <input
-            type="link"
-            id="input-playlist"
-            placeholder="Entre l'url de ta playlist deezer..."
-          />
-          <button id="btn-charger">
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              width="24"
-              height="24"
-              fill="none"
-              stroke="currentColor"
-              stroke-width="2"
-              viewBox="0 0 24 24"
-            >
-              <circle cx="11" cy="11" r="8"></circle>
-              <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
-            </svg>
-          </button>
+         
         </section>
 
-        <section id="body-selection" class="playlist-container"></section>
-        <h2
-          style="
-            color: white;
-            text-align: center;
-            margin-top: 100px;
-            margin-bottom: 100px;
-            font-family: &quot;Segoe UI&quot;, sans-serif;
-          "
-        >
-          Mes Favoris
-        </h2>
-        <section id="favorites-selection" class="playlist-container"></section>
+        <div class="section-title-container">
+          <h2>Playlists Disponibles</h2>
+        </div>
+        <section id="body-selection" class="playlist-grid"></section>
+
+        <div class="section-title-container">
+          <h2>Mes Favoris</h2>
+        </div>
+        <section id="favorites-selection" class="playlist-grid"></section>
       </div>
 
       <div id="interface-options" class="hide">
