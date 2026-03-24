@@ -9,12 +9,12 @@ import { initPlaylists } from "../main.js";
 export const view = {
   body: document.querySelector("body"),
 
-  // Interface de sélection
+  // Interface de sélection des playlists
   interfaceSelection: document.querySelector("#interface-selection"),
   container: document.querySelector("#body-selection"),
   containerFavorites: document.querySelector("#favorites-selection"),
 
-  // Interface de la partie et ses éléments
+  // Interface du jeu et éléments
   interfacePartie: document.querySelector("#interface-partie"),
   playlistTitle: document.querySelector("#playlist-title"),
   cover: document.querySelector("#cover"),
@@ -28,7 +28,7 @@ export const view = {
   genreChoisiTitle: document.querySelector("#genre-choisi-title"),
   genreChoisiImg: document.querySelector("#genre-choisi-img"),
 
-  // Boutons et inputs
+  // Boutons et champs d'entrée
   btnQuitter: document.querySelector("#btn-quitter-bt"),
   inputResponse: document.querySelector("#response-part input"),
   btnValider: document.querySelector("#btn-valider"),
@@ -44,12 +44,11 @@ export const view = {
   btnOptionsValider: document.querySelector("#btn-options-valider"),
 };
 
-// --- SLIDERS ---
+// Gestionnaire de clic sur les cartes de playlist - navigue vers les options du jeu
 view.interfaceSelection.addEventListener("click", (e) => {
-  // On cherche si on a cliqué sur une figure (une carte)
   const figure = e.target.closest("figure");
 
-  // Si on clique sur un bouton "Favoris" ou "Supprimer", on ne lance pas la partie
+  // Ne pas déclencher si un clic sur les boutons (favoris, supprimer)
   if (e.target.closest("button")) return;
 
   if (figure && figure.dataset.playlist) {
@@ -58,7 +57,7 @@ view.interfaceSelection.addEventListener("click", (e) => {
   }
 });
 
-// --- BOUTON QUITTER ---
+// Bouton quitter - nettoie et retourne à la sélection de playlist
 view.btnQuitter.addEventListener("click", () => {
   const audioEnCours = view.player.querySelector("audio");
   if (audioEnCours) {
@@ -76,7 +75,7 @@ view.btnQuitter.addEventListener("click", () => {
   view.interfaceSelection.classList.remove("hide");
 });
 
-// --- BOUTON CHARGER PLAYLIST ---
+// Charger une playlist personnalisée depuis un lien Deezer
 view.btnChargerPlaylist.addEventListener("click", async () => {
   const link = view.playlistPerso.value;
 
@@ -100,7 +99,7 @@ view.btnChargerPlaylist.addEventListener("click", async () => {
   }
 });
 
-// --- BOUTON CHERCHER PLAYLIST ---
+// Rechercher/filtrer les playlists par titre
 view.playlistRecherche.addEventListener("keyup", async () => {
   const recherche = view.playlistRecherche.value;
   if (recherche) {
@@ -110,7 +109,7 @@ view.playlistRecherche.addEventListener("keyup", async () => {
   }
 });
 
-// --- OPTIONS ---
+// Panneau d'options - boutons retour et valider
 view.btnOptionsRetour.addEventListener("click", () => {
   view.optionsPartie.classList.add("hide");
   view.body.classList.remove("no-scroll");
@@ -122,6 +121,7 @@ view.btnOptionsValider.addEventListener("click", () => {
   startGame(validateOptions());
 });
 
+// Sélection du bouton de difficulté
 view.diffBtns.forEach((btn) => {
   btn.addEventListener("click", (e) => {
     view.diffBtns.forEach((b) => b.classList.remove("active"));

@@ -1,3 +1,4 @@
+// Représente une chanson
 export class Track {
   constructor(data) {
     this.id = data.id;

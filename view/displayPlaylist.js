@@ -7,16 +7,18 @@ import {
 import { initPlaylists } from "../main.js";
 import persist from "../model/persist.js";
 
+// Affiche une carte de playlist avec bouton favori et bouton de suppression et filtre par terme de recherche si fourni
 export function displayPlaylistPerso(
   playlistData,
   playlistId,
   recherche,
   targetContainer = view.container,
 ) {
-  if (recherche != ""){
-    const regex = new RegExp(recherche, 'i');
+  if (recherche != "") {
+    const regex = new RegExp(recherche, "i");
     if (!regex.test(playlistData.title)) return;
   }
+
   const figure = document.createElement("figure");
   figure.dataset.playlist = playlistId;
   const img = document.createElement("img");
@@ -29,18 +31,17 @@ export function displayPlaylistPerso(
 
   const boutons = document.createElement("div");
 
-  // --- BOUTON FAVORIS (COEUR) ---
+  // icône coeur
   const boutonFavoris = document.createElement("button");
   boutonFavoris.classList.add("btn-fav-svg");
 
-  // On vérifie si c'est un favori pour définir la couleur
   const isFav = estFavoris(playlistId);
   const heartFill = isFav ? "var(--deezer-purple)" : "none";
   const heartStroke = isFav ? "var(--deezer-purple)" : "white";
 
   boutonFavoris.innerHTML = `
-    <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" 
-         fill="${heartFill}" stroke="${heartStroke}" stroke-width="2" 
+    <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24"
+         fill="${heartFill}" stroke="${heartStroke}" stroke-width="2"
          stroke-linecap="round" stroke-linejoin="round" class="heart-icon">
       <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path>
     </svg>
@@ -62,7 +63,12 @@ export function displayPlaylistPerso(
     });
 
     if (isFav) {
-      displayPlaylistPerso(playlistData, playlistId, recherche, view.containerFavorites);
+      displayPlaylistPerso(
+        playlistData,
+        playlistId,
+        recherche,
+        view.containerFavorites,
+      );
     } else {
       const figureDansFavoris = view.containerFavorites.querySelector(
         `figure[data-playlist="${playlistId}"]`,
@@ -73,7 +79,7 @@ export function displayPlaylistPerso(
     }
   });
 
-  // --- BOUTON SUPPRIMER ---
+  // Bouton de suppression d'une playlist
   const boutonSupprimer = document.createElement("button");
   boutonSupprimer.textContent = "Supprimer";
   boutonSupprimer.addEventListener("click", (e) => {
@@ -86,7 +92,6 @@ export function displayPlaylistPerso(
   boutonSupprimer.classList.add("btn-supp");
   boutons.classList.add("boutons");
 
-  // On ajoute les éléments
   boutons.appendChild(boutonFavoris);
   boutons.appendChild(boutonSupprimer);
   figure.appendChild(boutons);
@@ -94,10 +99,10 @@ export function displayPlaylistPerso(
   targetContainer.appendChild(figure);
 }
 
+// Permet d'afficher le fait que aucune playlist est dispo
 export function displayAddPlaylist() {
   const figure = document.createElement("figure");
   const figcaption = document.createElement("figcaption");
-  figcaption.textContent = "Il faut ajouter une playlist";
   figure.appendChild(figcaption);
   view.container.appendChild(figure);
 }

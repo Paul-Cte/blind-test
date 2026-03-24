@@ -2,37 +2,30 @@ import { view } from "./view.js";
 
 let currentAudio = null;
 
+// Affiche l'interface du jeu et la première question
 export function startGameUI(partie, title) {
   view.interfacePartie.classList.remove("hide");
   view.playlistTitle.textContent = title;
   renderQuestion(partie);
 }
 
+// Affiche une question et configure l'interface
 export function renderQuestion(partie) {
   const track = partie.getCurrentTrack();
-  console.log("Piste actuelle :", track.title);
-
-  // Réinitialiser et préparer l'interface visuelle
   setupQuestionUI(partie, track);
-
-  // Lancer la musique et gérer le chronomètre
-  // On récupère un objet de contrôle pour gérer les réponses
   const control = manageAudioAndTimer(partie, track);
-
-  // Gérer l'autocomplétion de la barre de recherche
   setupSuggestions(partie);
-
-  // Assigner les actions aux boutons (Valider, Suivant, Skip)
   setupGameButtons(partie, control);
 }
 
+// Initialise l'interface de la question
 function setupQuestionUI(partie, track) {
   view.response.textContent = "";
   view.cover.src = track.cover;
   view.cover.style.filter = "blur(50px)";
   view.timer.textContent = partie.guessTime;
 
-  // Désactivation des boutons en début de manche
+  // on désactive les boutons jusqu'à ce que l'audio commence à jouer
   view.btnSuivant.classList.add("disabled");
   view.btnSuivant.disabled = true;
   view.btnValider.disabled = true;
@@ -42,8 +35,9 @@ function setupQuestionUI(partie, track) {
   updateNbTracks(partie);
 }
 
+//Gère la lecture audio et le minuteur dégressif et retourne un objet de contrôle pour gérer la soumission de réponses
 function manageAudioAndTimer(partie, track) {
-  // Nettoyer l'audio précédent s'il y en a un
+  // Nettoyer l'audio précédent s'il existe
   if (currentAudio) {
     currentAudio.pause();
     currentAudio.remove();
@@ -56,14 +50,12 @@ function manageAudioAndTimer(partie, track) {
 
   let hasAnswered = false;
 
-  // Fonction interne appelée quand le temps est écoulé ou validé manuellement
   const triggerAnswer = (manualAnswer = null) => {
     if (hasAnswered) return;
     hasAnswered = true;
     currentAudio.pause();
     view.timer.textContent = "";
 
-    // Si la réponse n'est pas manuelle, on prend ce qu'il y a dans l'input
     const finalAnswer = manualAnswer ?? view.inputResponse.value ?? "";
     showAnswer(partie, finalAnswer);
   };
@@ -77,7 +69,7 @@ function manageAudioAndTimer(partie, track) {
     if (currentAudio.currentTime >= partie.guessTime) {
       triggerAnswer();
     } else {
-      // Activer le bouton valider dès que la musique tourne
+      // ça active le bouton valider une fois que l'audio commence à jouer
       view.btnValider.disabled = false;
       view.btnValider.classList.remove("disabled");
     }
@@ -85,7 +77,6 @@ function manageAudioAndTimer(partie, track) {
 
   currentAudio.addEventListener("ended", () => triggerAnswer());
 
-  // On retourne de quoi contrôler manuellement la validation depuis les boutons
   return {
     triggerAnswer,
     stopAudio: () => {
@@ -95,6 +86,7 @@ function manageAudioAndTimer(partie, track) {
   };
 }
 
+// Configure les suggestions d'autocomplétion
 function setupSuggestions(partie) {
   view.inputResponse.oninput = (e) => {
     const textTaped = e.target.value;
@@ -123,6 +115,7 @@ function setupSuggestions(partie) {
   };
 }
 
+// Attache les gestionnaires de clic aux boutons valider, suivant et passer
 function setupGameButtons(partie, control) {
   view.btnValider.onclick = () => {
     control.triggerAnswer(view.inputResponse.value ?? "");
@@ -140,18 +133,21 @@ function setupGameButtons(partie, control) {
   };
 }
 
+// Affiche la réponse correcte et annonce le résultat
 export function showAnswer(partie, answer) {
   const track = partie.getCurrentTrack();
   const isCorrect = partie.checkAnswer(answer);
   view.response.textContent = `${track.title} - ${track.artist}`;
+
   if (isCorrect) {
-    view.response.textContent += " : Bonne réponse !";
+    view.response.textContent += " : Correct !";
     view.response.style.color = "green";
     updateScore(partie);
   } else {
-    view.response.textContent += " : Mauvaise réponse !";
+    view.response.textContent += " : Incorrect !";
     view.response.style.color = "red";
   }
+
   view.timer.textContent = "";
   view.btnSuivant.classList.remove("disabled");
   view.btnSuivant.disabled = false;
@@ -160,6 +156,7 @@ export function showAnswer(partie, answer) {
   view.cover.style.filter = "blur(0px)";
 }
 
+// Passe à la question suivante ou termine le jeu si il n'y en a pas
 export function endRound(partie) {
   if (partie.nextTrack()) {
     view.inputResponse.value = "";
@@ -169,14 +166,17 @@ export function endRound(partie) {
   }
 }
 
+// Met à jour le score affiché
 export function updateScore(partie) {
   view.score.textContent = `Score: ${partie.score}/${partie.tracks.length}`;
 }
 
+// Met à jour le numéro de la piste affichée
 export function updateNbTracks(partie) {
   view.nbTracks.textContent = `Musique ${partie.currentTrackIndex + 1}/${partie.tracks.length}`;
 }
 
+// Affiche l'alerte du score final et retourne à la sélection de la playlist
 export function endGame(finalScore) {
   alert(`Partie terminée ! Votre score final est : ${finalScore}`);
 }

@@ -1,5 +1,6 @@
 import { view } from "./view.js";
 
+// Affiche l'interface des options du jeu
 export function startOptionsUI(playlistId, playlist) {
   view.interfaceSelection.parentElement
     .querySelector("#interface-selection")
@@ -13,14 +14,18 @@ export function startOptionsUI(playlistId, playlist) {
   view.optionsPartie.dataset.playlistId = playlistId;
 }
 
+// Masque l'interface des options du jeu
 export function hideOptionsUI() {
   view.optionsPartie.classList.add("hide");
   view.genreChoisiImg.src = "";
   view.genreChoisiTitle.textContent = "";
 }
 
+/**
+ * Récupère les options du jeu sélectionnées (difficulté et playlist)
+ * @returns {Object} Objet avec guessTime et playlistId
+ */
 export function getOptionsValues() {
-  // On cherche le bouton qui a la classe 'active'
   const activeBtn = document.querySelector(".diff-btn.active");
   const guessTime = activeBtn ? parseInt(activeBtn.dataset.time, 10) : 20;
   const playlistId = view.optionsPartie.dataset.playlistId;

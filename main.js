@@ -6,7 +6,6 @@ import {
 } from "./view/displayPlaylist.js";
 import persist from "./model/persist.js";
 
-// Affichage des playlists
 export async function initPlaylists(recherche = "") {
   view.container.innerHTML = "";
   if (view.containerFavorites) view.containerFavorites.innerHTML = "";
@@ -22,12 +21,16 @@ export async function initPlaylists(recherche = "") {
 
     const favoris = persist.getFavorites();
     favoris.forEach((playlist) => {
-      displayPlaylistPerso(playlist, playlist.id, recherche, view.containerFavorites);
+      displayPlaylistPerso(
+        playlist,
+        playlist.id,
+        recherche,
+        view.containerFavorites,
+      );
     });
   }
 }
 
-// Affichage des playlists après chargement
 await persist.build().then(async () => {
   initPlaylists();
 });
