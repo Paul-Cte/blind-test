@@ -92,6 +92,8 @@ export function displayPlaylistPerso(
 
   figure.classList.add("active");
   targetContainer.prepend(figure);
+
+  
 }
 
 export function displayAddPlaylist() {

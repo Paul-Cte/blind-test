@@ -68,8 +68,14 @@ body.no-scroll {
   flex-direction: row;
   gap: 70px;
   width: 100%;
-  transition: 0.2s ease-in-out;
-  padding-left: 140px;
+  padding: 40px 140px;
+  overflow-x: scroll;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+.playlist-container::-webkit-scrollbar {
+  display: none;
 }
 
 .playlist-container > figure {

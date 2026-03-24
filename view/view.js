@@ -1,8 +1,6 @@
 import { startGame } from "../controller/gameController.js";
-import {
-  startOptions,
-  validateOptions,
-} from "../controller/optionsController.js";
+import { Slider } from "./slider.js";
+import { startOptions, validateOptions } from "../controller/optionsController.js";
 import { loadPlaylistPerso } from "../controller/genreController.js";
 
 export const view = {
@@ -22,7 +20,6 @@ export const view = {
   player: document.querySelector("#player"),
   score: document.querySelector("#score"),
   nbTracks: document.querySelector("#nb-tracks"),
-  container: document.querySelector("#body-selection"),
   optionsPartie: document.querySelector("#interface-options"),
   genreChoisi: document.querySelector("#genre-choisi"),
   genreChoisiTitle: document.querySelector("#genre-choisi-title"),
@@ -43,47 +40,21 @@ export const view = {
   btnOptionsValider: document.querySelector("#btn-options-valider"),
 };
 
-view.interfaceSelection.addEventListener("click", (event) => {
-  // On vérifie si on a bien cliqué sur une playlist (figure)
-  const clickedFigure = event.target.closest("figure");
-  if (!clickedFigure) return;
-
-  // On identifie dans QUELLE liste (favoris ou principale) on se trouve
-  const container = clickedFigure.closest(".playlist-container");
-  if (!container) return;
-
-  const figures = container.querySelectorAll("figure");
-
-  if (window.innerWidth > 900) {
-    if (clickedFigure.classList.contains("active")) {
-      // Si elle est déjà au centre, on lance le jeu
-      startOptions(clickedFigure.dataset.playlist);
-    } else {
-      // Sinon, on désactive les autres figures de CETTE liste uniquement
-      figures.forEach((figure) => figure.classList.remove("active"));
-      clickedFigure.classList.add("active");
-
-      const dimensions = clickedFigure.getBoundingClientRect();
-
-      let currentTranslate = parseInt(container.dataset.translate || 0);
-
-      if (dimensions.right > window.innerWidth) {
-        currentTranslate += dimensions.width + 70;
-        container.style.transform = `translateX(-${currentTranslate}px)`;
-        container.dataset.translate = currentTranslate;
-      } else if (dimensions.left < 0) {
-        currentTranslate -= dimensions.width + 70;
-        container.style.transform = `translateX(-${currentTranslate}px)`;
-        container.dataset.translate = currentTranslate;
-      }
-    }
-  } else {
-    clickedFigure.classList.add("active");
-    startOptions(clickedFigure.dataset.playlist);
+// --- SLIDERS ---
+if (window.innerWidth > 900) {
+  new Slider(view.container, (playlistId) => startOptions(playlistId));
+  new Slider(view.containerFavorites, (playlistId) => startOptions(playlistId));
+} else {
+  view.interfaceSelection.addEventListener("click", (e) => {
+    const figure = e.target.closest("figure");
+    if (!figure) return;
+    figure.classList.add("active");
+    startOptions(figure.dataset.playlist);
     view.body.classList.add("no-scroll");
-  }
-});
+  });
+}
 
+// --- BOUTON QUITTER ---
 view.btnQuitter.addEventListener("click", () => {
   const audioEnCours = view.player.querySelector("audio");
   if (audioEnCours) {
@@ -99,6 +70,7 @@ view.btnQuitter.addEventListener("click", () => {
   view.body.classList.remove("no-scroll");
 });
 
+// --- BOUTON CHERCHER PLAYLIST ---
 view.btnChercherPlaylist.addEventListener("click", async () => {
   const link = view.playlistPerso.value;
 
@@ -122,6 +94,7 @@ view.btnChercherPlaylist.addEventListener("click", async () => {
   }
 });
 
+// --- OPTIONS ---
 view.btnOptionsRetour.addEventListener("click", () => {
   view.optionsPartie.classList.add("hide");
   view.body.classList.remove("no-scroll");
