@@ -38,12 +38,10 @@ export const view = {
   playlistPerso: document.querySelector("#input-playlist"),
   btnChargerPlaylist: document.querySelector("#btn-charger"),
   playlistRecherche: document.querySelector("#input-recherche"),
-  btnChercherPlaylist: document.querySelector("#btn-chercher"),
   btnRetour: document.querySelector("#btn-retour-genres"),
   diffBtns: document.querySelectorAll(".diff-btn"),
   btnOptionsRetour: document.querySelector("#btn-options-retour"),
   btnOptionsValider: document.querySelector("#btn-options-valider"),
-
 };
 
 // --- SLIDERS ---
@@ -103,17 +101,14 @@ view.btnChargerPlaylist.addEventListener("click", async () => {
 });
 
 // --- BOUTON CHERCHER PLAYLIST ---
-view.btnChercherPlaylist.addEventListener("click", async () => {
+view.playlistRecherche.addEventListener("keyup", async () => {
   const recherche = view.playlistRecherche.value;
   if (recherche) {
     await initPlaylists(recherche);
-  }
-  else{
+  } else {
     await initPlaylists();
   }
 });
-
-
 
 // --- OPTIONS ---
 view.btnOptionsRetour.addEventListener("click", () => {

@@ -37,8 +37,11 @@ body {
 #header-selection {
   padding: 8vh 20px 4vh 20px;
   display: flex;
+  flex-direction: row-reverse;
+  flex-wrap: wrap;
   justify-content: center;
   width: 100%;
+  gap: 10px;
 }
 
 .search-wrapper {
@@ -58,13 +61,18 @@ body {
   background-color: #2a2a2a;
 }
 
-#input-playlist {
+#input-playlist,
+#input-recherche {
   flex: 1;
   background: transparent;
   border: none;
   color: white;
   font-size: 1.1rem;
   outline: none;
+}
+
+#input-recherche {
+  height: 50px;
 }
 
 #btn-charger {
