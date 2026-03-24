@@ -7,7 +7,7 @@ import {
 import persist from "./model/persist.js";
 
 // Affichage des playlists
-export async function initPlaylists() {
+export async function initPlaylists(recherche = "") {
   view.container.innerHTML = "";
   if (view.containerFavorites) view.containerFavorites.innerHTML = "";
 
@@ -17,12 +17,12 @@ export async function initPlaylists() {
     for (const [playlistId, playlistData] of Object.entries(
       persist.playlists,
     )) {
-      await loadDefaultPlaylist(playlistId, playlistData);
+      await loadDefaultPlaylist(playlistId, playlistData, recherche);
     }
 
     const favoris = persist.getFavorites();
     favoris.forEach((playlist) => {
-      displayPlaylistPerso(playlist, playlist.id, view.containerFavorites);
+      displayPlaylistPerso(playlist, playlist.id, recherche, view.containerFavorites);
     });
   }
 }
