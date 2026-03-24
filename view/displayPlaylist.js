@@ -86,14 +86,7 @@ export function displayPlaylistPerso(
   boutons.appendChild(boutonSupprimer);
   figure.appendChild(boutons);
 
-  // --- GESTION DE LA POSITION (TOUT À GAUCHE) ET ACTIF ---
-  const figuresExistantes = targetContainer.querySelectorAll("figure");
-  figuresExistantes.forEach((fig) => fig.classList.remove("active"));
-
-  figure.classList.add("active");
-  targetContainer.prepend(figure);
-
-  
+  targetContainer.appendChild(figure);
 }
 
 export function displayAddPlaylist() {
