@@ -10,8 +10,13 @@ import persist from "../model/persist.js";
 export function displayPlaylistPerso(
   playlistData,
   playlistId,
+  recherche,
   targetContainer = view.container,
 ) {
+  if (recherche != ""){
+    const regex = new RegExp(recherche, 'i');
+    if (!regex.test(playlistData.title)) return;
+  }
   const figure = document.createElement("figure");
   figure.dataset.playlist = playlistId;
   const img = document.createElement("img");
@@ -57,7 +62,7 @@ export function displayPlaylistPerso(
     });
 
     if (isFav) {
-      displayPlaylistPerso(playlistData, playlistId, view.containerFavorites);
+      displayPlaylistPerso(playlistData, playlistId, recherche, view.containerFavorites);
     } else {
       const figureDansFavoris = view.containerFavorites.querySelector(
         `figure[data-playlist="${playlistId}"]`,

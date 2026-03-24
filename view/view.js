@@ -2,6 +2,7 @@ import { startGame } from "../controller/gameController.js";
 import { Slider } from "./slider.js";
 import { startOptions, validateOptions } from "../controller/optionsController.js";
 import { loadPlaylistPerso } from "../controller/genreController.js";
+import { initPlaylists } from "../main.js";
 
 export const view = {
   body: document.querySelector("body"),
@@ -33,11 +34,14 @@ export const view = {
   btnSkip: document.querySelector("#btn-skip"),
   suggestionsList: document.querySelector("#suggestions"),
   playlistPerso: document.querySelector("#input-playlist"),
-  btnChercherPlaylist: document.querySelector("#btn-charger"),
+  btnChargerPlaylist: document.querySelector("#btn-charger"),
+  playlistRecherche: document.querySelector("#input-recherche"),
+  btnChercherPlaylist: document.querySelector("#btn-chercher"),
   btnRetour: document.querySelector("#btn-retour-genres"),
   diffBtns: document.querySelectorAll(".diff-btn"),
   btnOptionsRetour: document.querySelector("#btn-options-retour"),
   btnOptionsValider: document.querySelector("#btn-options-valider"),
+
 };
 
 // --- SLIDERS ---
@@ -70,29 +74,42 @@ view.btnQuitter.addEventListener("click", () => {
   view.body.classList.remove("no-scroll");
 });
 
-// --- BOUTON CHERCHER PLAYLIST ---
-view.btnChercherPlaylist.addEventListener("click", async () => {
+// --- BOUTON CHARGER PLAYLIST ---
+view.btnChargerPlaylist.addEventListener("click", async () => {
   const link = view.playlistPerso.value;
 
   if (link) {
-    const originalIcon = view.btnChercherPlaylist.innerHTML;
+    const originalIcon = view.btnChargerPlaylist.innerHTML;
 
-    view.btnChercherPlaylist.innerHTML = `
+    view.btnChargerPlaylist.innerHTML = `
       <svg class="spinner" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
         <path d="M21 12a9 9 0 1 1-6.219-8.56"></path>
       </svg>
     `;
-    view.btnChercherPlaylist.disabled = true;
-    view.btnChercherPlaylist.style.cursor = "wait";
+    view.btnChargerPlaylist.disabled = true;
+    view.btnChargerPlaylist.style.cursor = "wait";
 
     await loadPlaylistPerso(link);
 
-    view.btnChercherPlaylist.innerHTML = originalIcon;
-    view.btnChercherPlaylist.disabled = false;
-    view.btnChercherPlaylist.style.cursor = "pointer";
+    view.btnChargerPlaylist.innerHTML = originalIcon;
+    view.btnChargerPlaylist.disabled = false;
+    view.btnChargerPlaylist.style.cursor = "pointer";
     view.playlistPerso.value = "";
   }
 });
+
+// --- BOUTON CHERCHER PLAYLIST ---
+view.btnChercherPlaylist.addEventListener("click", async () => {
+  const recherche = view.playlistRecherche.value;
+  if (recherche) {
+    await initPlaylists(recherche);
+  }
+  else{
+    await initPlaylists();
+  }
+});
+
+
 
 // --- OPTIONS ---
 view.btnOptionsRetour.addEventListener("click", () => {
